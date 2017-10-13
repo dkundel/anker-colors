@@ -1,3 +1,5 @@
+import { Shades, Dict, ThemeFlavor } from './interfaces';
+
 export const limeGreen = '#9ed356';
 export const darkBlue = '#13293d';
 export const lightGrey = '#f4f7f5';
@@ -18,7 +20,7 @@ export const colors = {
   pink
 };
 
-const limeGreenShades = {
+const limeGreenShades: Shades = {
   100: '#D7F4AF',
   300: '#C0EC82',
   500: limeGreen,
@@ -26,7 +28,7 @@ const limeGreenShades = {
   900: '#619619'
 };
 
-const secondaryGreenShades = {
+const secondaryGreenShades: Shades = {
   100: '#9FDDB4',
   300: '#6CC389',
   500: secondaryGreen,
@@ -34,7 +36,7 @@ const secondaryGreenShades = {
   900: '#147836'
 };
 
-const redShades = {
+const redShades: Shades = {
   100: '#FFC2B7',
   300: '#FF9F8D',
   500: red,
@@ -42,7 +44,7 @@ const redShades = {
   900: '#A3301B'
 };
 
-const pinkShades = {
+const pinkShades: Shades = {
   100: '#ECA9C6',
   300: '#DD7AA5',
   500: pink,
@@ -50,7 +52,7 @@ const pinkShades = {
   900: '#8A174A'
 };
 
-const darkBlueShades = {
+const darkBlueShades: Shades = {
   100: '#375167',
   300: '#223A50',
   500: '#13293D',
@@ -58,7 +60,7 @@ const darkBlueShades = {
   900: '#010C16'
 };
 
-const purpleShades = {
+const purpleShades: Shades = {
   100: '#837B97',
   300: '#63587B',
   500: purple,
@@ -66,7 +68,7 @@ const purpleShades = {
   900: '#23183F'
 };
 
-export const shades = {
+export const shades: Dict<Shades> = {
   limeGreen: limeGreenShades,
   secondaryGreen: secondaryGreenShades,
   red: redShades,
@@ -75,13 +77,20 @@ export const shades = {
   purpleShades: purpleShades
 };
 
-export const dark = {
+export const dark: ThemeFlavor = {
   background: darkBlue,
-  text: lightGrey
+  text: lightGrey,
+  heading: limeGreen
 };
-export const light = {
+export const light: ThemeFlavor = {
   background: lightGrey,
-  text: darkGray
+  text: darkGray,
+  heading: limeGreen
+};
+
+export const themes = {
+  dark,
+  light
 };
 
 export const primary = limeGreen;
