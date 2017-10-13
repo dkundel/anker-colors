@@ -7,6 +7,17 @@ export const secondaryGreen = '#45A967';
 export const red = '#FF9F8D';
 export const pink = '#C35082';
 
+export const colors = {
+  limeGreen,
+  darkBlue,
+  lightGrey,
+  darkGray,
+  purple,
+  secondaryGreen,
+  red,
+  pink
+};
+
 const limeGreenShades = {
   100: '#D7F4AF',
   300: '#C0EC82',
@@ -78,3 +89,5 @@ export const secondary = purple;
 export const complimentary = pink;
 export const background = dark.background;
 export const text = dark.text;
+
+export default colors;
