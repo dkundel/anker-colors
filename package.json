@@ -1,0 +1,26 @@
+{
+  "name": "sloth-colors",
+  "version": "1.0.0",
+  "description": "Personal color scheme used for various projects",
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkundel/anker-colors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dkundel/anker-colors/issues"
+  },
+  "homepage": "https://github.com/dkundel/anker-colors#readme",
+  "keywords": ["colors", "palette", "sloth"],
+  "author": "Dominik Kundel <dominik.kundel@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  }
+}
