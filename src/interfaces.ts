@@ -1,4 +1,4 @@
-export interface Shades {
+export interface ColorShades {
   100: string;
   300: string;
   500: string;
@@ -15,3 +15,21 @@ export interface ThemeFlavor {
   heading: string;
   text: string;
 }
+
+export interface Colors {
+  limeGreen: string;
+  darkBlue: string;
+  purple: string;
+  secondaryGreen: string;
+  red: string;
+  pink: string;
+}
+
+export interface ExtendedColors extends Colors {
+  lightGray: string;
+  darkGray: string;
+}
+
+export type Color = keyof Colors;
+
+export type Shades = { [key in Color]: ColorShades };
