@@ -9,6 +9,8 @@
     "build:tsc": "tsc",
     "build:templates": "node scripts/generate.js",
     "build": "npm-run-all build:templates build:tsc",
+    "postbuild": "npm run clean",
+    "clean": "rimraf tmp",
     "prepare": "npm run build"
   },
   "repository": {
@@ -19,11 +21,7 @@
     "url": "https://github.com/dkundel/anker-colors/issues"
   },
   "homepage": "https://github.com/dkundel/anker-colors#readme",
-  "keywords": [
-    "colors",
-    "palette",
-    "anker"
-  ],
+  "keywords": ["colors", "palette", "anker"],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
   "license": "MIT",
   "devDependencies": {

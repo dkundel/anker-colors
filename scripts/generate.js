@@ -145,7 +145,7 @@ async function generate() {
   });
 
   const tmpFolder = path.resolve(__dirname, '../tmp');
-  const outFolder = path.resolve(__dirname, '../out');
+  const outFolder = path.resolve(__dirname, '../dist');
   await mkdir(tmpFolder);
   await mkdir(outFolder);
 
