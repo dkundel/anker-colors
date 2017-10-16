@@ -60,8 +60,8 @@ function addAdditionalColors(primaryHexColor, colorConfig) {
 
   const advancedConfig = { ...colorConfig };
   for (let color of newColors) {
-    const { basic } = colorNamer(color);
-    const { name: colorName } = basic[0];
+    const { html } = colorNamer(color);
+    const { name: colorName } = html[0];
     if (advancedConfig[colorName] === undefined) {
       advancedConfig[colorName] = `#${color}`;
     }
