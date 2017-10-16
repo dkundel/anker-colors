@@ -11,29 +11,46 @@ const writeFile = promisify(fs.writeFile);
 
 const colorJson = require('../src/colors.json');
 
-function generateImageUrl(rgbColor, pixel) {
-  const sanitizedColor = rgbColor.replace('#', '');
+dot.templateSettings.strip = false;
+
+function generateImageUrl(hexColor, pixel) {
+  pixel = pixel || 50;
+  const sanitizedColor = hexColor.replace('#', '');
   return `http://via.placeholder.com/${pixel}/${sanitizedColor}/${sanitizedColor}`;
 }
 
-function generateShades(rgbColor) {
-  const color = tc(rgbColor);
-  const gradients = color
-    .monochromatic(5)
-    .sort((a, b) => a.getLuminance() - b.getLuminance())
-    .map(c => `#${c.toHex()}`);
+function generateMonochromatic(hexColor) {
+  const numberOfResults = 5;
+  let { h, s, l } = tc(hexColor).toHsl();
+
+  const stepSize = 1 / (numberOfResults + 2);
+  const middle = Math.floor(numberOfResults / 2);
+  let result = Array.from({ length: numberOfResults }).map((_, idx) => {
+    const newL = (l + stepSize * (idx - middle) + 1) % 1;
+    return tc({ h, s, l: newL });
+  });
+
+  return result;
+}
+
+function generateShades(hexColor) {
+  const gradients = generateMonochromatic(hexColor)
+    .filter(c => c.toHexString() !== hexColor)
+    .sort((a, b) => b.getLuminance() - a.getLuminance())
+    .map(c => c.toHexString());
+
   return {
     100: gradients[0],
     300: gradients[1],
-    500: gradients[2],
-    700: gradients[3],
-    900: gradients[4]
+    500: hexColor,
+    700: gradients[2],
+    900: gradients[3]
   };
 }
 
-function addAdditionalColors(primaryRgbColor, colorConfig) {
+function addAdditionalColors(primaryHexColor, colorConfig) {
   const stepSize = 20;
-  const { h, s, l } = tc(primaryRgbColor).toHsl();
+  const { h, s, l } = tc(primaryHexColor).toHsl();
   const newColors = Array.from({
     length: Math.floor(360 / stepSize)
   }).map((_, idx) => {
@@ -74,6 +91,28 @@ function addColorsList(colorConfig) {
   return { ...colorConfig, colors };
 }
 
+function getColorInfo(name, colorConfig) {
+  const hex = colorConfig[name];
+  const color = tc(hex);
+  const hsl = `${color.toHslString()}`;
+  const rgb = `${color.toRgbString()}`;
+  const img = generateImageUrl(hex, 50);
+  const imgLong = generateImageUrl(hex, 125);
+  const shades = Object.keys(colorConfig.shades[name]).map(num => {
+    const hexColor = colorConfig.shades[name][num];
+    return generateImageUrl(hexColor, 25);
+  });
+  return { hsl, rgb, name, hex, img, shades, imgLong };
+}
+
+function getColorsForReadme(colorConfig) {
+  const colors = colorConfig.colors.map(name =>
+    getColorInfo(name, colorConfig)
+  );
+
+  return { colors };
+}
+
 async function generate() {
   const primaryColor = colorJson[colorJson.primary];
   const colorConfig = addColorsList(
@@ -81,7 +120,8 @@ async function generate() {
   );
 
   const dots = dot.process({
-    path: path.resolve(__dirname, '../src/templates')
+    path: path.resolve(__dirname, '../src/templates'),
+    strip: false
   });
 
   const tmpFolder = path.resolve(__dirname, '../tmp');
@@ -94,6 +134,11 @@ async function generate() {
   const tsFilePath = path.resolve(tmpFolder, 'index.ts');
   const ts = dots.typescript(colorConfig);
   await writeFile(tsFilePath, ts, 'utf8');
+
+  const readmeFilePath = path.resolve(__dirname, '..', 'README.md');
+  const colorsReadme = getColorsForReadme(colorConfig);
+  const readme = dots.readme(colorsReadme);
+  await writeFile(readmeFilePath, readme, 'utf8');
 }
 
 generate().catch(err => console.error(err));
