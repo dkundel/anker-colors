@@ -1,0 +1,19 @@
+/**
+* This file has been auto generated
+*/
+
+:root {{{~it.entries :entry}}
+--anker-{{= entry.name}}: {{= entry.hex}};{{~}}
+}
+
+{{~it.entries :entry}}
+.anker-bg-{{= entry.name}} {
+  background-color: {{= entry.hex}};
+}
+.anker-color-{{= entry.name}} {
+  color: {{= entry.hex}};
+}
+.anker-border-{{= entry.name}} {
+  border-color: {{= entry.hex}};
+}
+{{~}}

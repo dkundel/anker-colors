@@ -5,6 +5,7 @@ const dot = require('dot');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const fs = require('fs');
+const kebabCase = require('lodash.kebabcase');
 
 const mkdir = promisify(mkdirp);
 const writeFile = promisify(fs.writeFile);
@@ -113,6 +114,25 @@ function getColorsForReadme(colorConfig) {
   return { colors };
 }
 
+function getColorEntriesForCss(colorConfig) {
+  const entries = [];
+
+  colorConfig.colors.forEach(color => {
+    const name = kebabCase(color);
+    const hex = colorConfig[color];
+    entries.push({ name, hex });
+
+    const shade = colorConfig.shades[color];
+    Object.keys(shade).forEach(shadeEntry => {
+      const name = `${kebabCase(color)}-${shadeEntry}`;
+      const hex = shade[shadeEntry];
+      entries.push({ name, hex });
+    });
+  });
+
+  return { entries };
+}
+
 async function generate() {
   const primaryColor = colorJson[colorJson.primary];
   const colorConfig = addColorsList(
@@ -125,7 +145,9 @@ async function generate() {
   });
 
   const tmpFolder = path.resolve(__dirname, '../tmp');
+  const outFolder = path.resolve(__dirname, '../out');
   await mkdir(tmpFolder);
+  await mkdir(outFolder);
 
   const interfaceFilePath = path.resolve(tmpFolder, 'interfaces.ts');
   const interfaces = dots.interfaces(colorConfig);
@@ -139,6 +161,15 @@ async function generate() {
   const colorsReadme = getColorsForReadme(colorConfig);
   const readme = dots.readme(colorsReadme);
   await writeFile(readmeFilePath, readme, 'utf8');
+
+  const cssColorEntries = getColorEntriesForCss(colorConfig);
+  const sassFilePath = path.resolve(outFolder, 'anker.scss');
+  const sass = dots.sass(cssColorEntries);
+  await writeFile(sassFilePath, sass, 'utf8');
+
+  const cssFilePath = path.resolve(outFolder, 'anker.css');
+  const css = dots.css(cssColorEntries);
+  await writeFile(cssFilePath, css, 'utf8');
 }
 
 generate().catch(err => console.error(err));
