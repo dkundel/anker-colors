@@ -2,8 +2,8 @@
   "name": "anker-colors",
   "version": "1.4.0",
   "description": "Personal color scheme used for various projects",
-  "main": "out/index.js",
-  "types": "out/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:tsc": "tsc",
@@ -21,11 +21,7 @@
     "url": "https://github.com/dkundel/anker-colors/issues"
   },
   "homepage": "https://github.com/dkundel/anker-colors#readme",
-  "keywords": [
-    "colors",
-    "palette",
-    "anker"
-  ],
+  "keywords": ["colors", "palette", "anker"],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
   "license": "MIT",
   "devDependencies": {
