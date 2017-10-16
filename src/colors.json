@@ -1,0 +1,27 @@
+{
+  "limeGreen": "#9ed356",
+  "darkBlue": "#13293d",
+  "lightGray": "#f4f7f5",
+  "darkGray": "#131515",
+  "purple": "#4a4063",
+  "secondaryGreen": "#45A967",
+  "salmon": "#FF9F8D",
+  "pink": "#C35082",
+  "themes": {
+    "dark": {
+      "background": "darkBlue",
+      "text": "lightGray",
+      "heading": "limeGreen"
+    },
+    "light": {
+      "background": "lightGray",
+      "text": "darkGray",
+      "heading": "limeGreen"
+    }
+  },
+  "primary": "limeGreen",
+  "secondary": "purple",
+  "complimentary": "pink",
+  "background": "dark.background",
+  "text": "dark.text"
+}

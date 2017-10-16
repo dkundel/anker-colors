@@ -17,17 +17,10 @@ export interface ThemeFlavor {
 }
 
 export interface Colors {
-  limeGreen: string;
-  darkBlue: string;
-  purple: string;
-  secondaryGreen: string;
-  red: string;
-  pink: string;
+  {{= it.colors.map(name => name + ': string;').join('')}}
 }
 
 export interface ExtendedColors extends Colors {
-  lightGray: string;
-  darkGray: string;
 }
 
 export type Color = keyof Colors;

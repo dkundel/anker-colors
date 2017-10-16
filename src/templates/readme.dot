@@ -1,0 +1,6 @@
+# anker-colors
+🌈  Color scheme used for slides, blog etc.
+
+| Name | Color | HEX | RGB | HSL | Shades |
+|---|---|---|---|---|---|{{~it.colors :value}}
+| `{{= value.name}}` | ![]({{= value.img}}) | `{{= value.hex}}` | `{{= value.rgb}}` | `{{= value.hsl}}` | ![]({{= value.imgLong}})<br/>{{= value.shades.map(s => '![](' + s + ')').join('')}} |{{~}}

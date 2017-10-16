@@ -1,0 +1,5 @@
+/**
+* This file has been auto generated
+*/
+{{~it.entries :entry}}
+${{= entry.name}}: {{= entry.hex}};{{~}}
