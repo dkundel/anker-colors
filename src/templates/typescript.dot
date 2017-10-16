@@ -1,0 +1,46 @@
+import {
+  ColorShades,
+  Dict,
+  ThemeFlavor,
+  Shades,
+  ExtendedColors
+} from './interfaces';
+
+{{ for(var name in it) { }}
+  {{? it[name][0] === '#' }}
+    export const {{= name}} = '{{= it[name]}}';
+  {{?}}
+{{ } }}
+
+{{ for (var name in it.themes) { }}
+  export const {{= name}}: ThemeFlavor = {
+    {{ for (var type in it.themes[name]) { }}
+      {{= type}}: {{= it.themes[name][type]}},
+    {{ } }}
+  };
+{{ } }}
+
+export const themes = {{{= Object.keys(it.themes).join(',')}}};
+
+{{ for (var name in it.shades) { }}
+  export const {{= name}}Shades: ColorShades = {
+    {{ for (var type in it.shades[name]) { }}
+      {{= type}}: '{{= it.shades[name][type]}}',
+    {{ } }}
+  };
+{{ } }}
+
+export const shades: Shades = {{{= Object.keys(it.shades).map(n => n + ': ' + n + 'Shades').join(',')}}};
+
+{{ for(var name in it) { }}
+  {{? typeof it[name] === 'string' && it[name][0] !== '#' }}
+    export const {{= name}} = {{= it[name]}};
+  {{?}}
+{{ } }}
+
+export const colors: ExtendedColors = {
+  {{= it.colors.join(',')}}
+};
+
+export default colors;
+
